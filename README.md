@@ -32,3 +32,4 @@ apsis.subscriber.create(MailingListId, UpdateIfExists, subscriber)
 
 ## Todo
 * Add implementation for missing API methods
+* Create some sort of build script so the can be maintained in several files
