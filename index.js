@@ -67,7 +67,6 @@ Apsis.subscriber = {
   unsubscribe: (MailingListId, email) => {
     return Apsis.subscriber.getIdByEmail(email).then((response) => {
       const subscriberId = response.Result[0];
-      console.log('ID IS: ', subscriberId);
       //http://se.apidoc.anpdm.com/Browse/Method/MailingListService/DeleteSingleSubscription
       var path = `/v1/mailinglists/${MailingListId}/subscriptions/${subscriberId}`;
       return Apsis.request(path, 'DELETE', '');
