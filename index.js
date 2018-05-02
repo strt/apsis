@@ -2,7 +2,6 @@ const http = require("http");
 const https = require("https");
 
 var Apsis = {};
-
 Apsis.init = (options) => {
   if(!options.ApiKey) throw new Error("API Key is required to initate the API");
 
@@ -38,7 +37,7 @@ Apsis.request = (path, method, body) => {
         data += d;
       });
 
-      res.on('end', () => {
+      res.on('end', (response) => {
         resolve(JSON.parse(data));
       });
     });
@@ -57,6 +56,24 @@ Apsis.subscriber = {
   create: (MailingListId, UpdateIfExists, subscriber) => {
     var path = `/v1/subscribers/mailinglist/${MailingListId}/create?updateIfExists=${UpdateIfExists}`;
     return Apsis.request(path, 'POST', subscriber);
+  },
+
+  getIdByEmail: (email) => {
+    var path = '/subscribers/v3/email';
+    var body = email;
+    return Apsis.request(path, 'POST', body);
+  },
+
+  unsubscribe: (MailingListId, email) => {
+    return Apsis.subscriber.getIdByEmail(email).then((response) => {
+      const subscriberId = response.Result[0];
+      console.log('ID IS: ', subscriberId);
+      //http://se.apidoc.anpdm.com/Browse/Method/MailingListService/DeleteSingleSubscription
+      var path = `/v1/mailinglists/${MailingListId}/subscriptions/${subscriberId}`;
+      return Apsis.request(path, 'DELETE', '');
+    }, (err) => {
+      console.log('error ', err);
+    });
   }
 }
 
