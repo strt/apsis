@@ -10,7 +10,6 @@ Apsis.endpoints = new Map([
 Apsis.demogaraphicKeyValueBindings = new Map([
     ['firstName', 'Fornamn'],
     ['lastName', 'Efternamn'],
-    ['phone', 'PhoneNumber'],
     ['company', 'Organisation'],
     ['area', 'Lan'],
 ]);
@@ -77,6 +76,7 @@ Apsis.sendTransactionEmail = (projectId, recipientData, subscriberData) => {
     data.DemDataFields = buildDemographicsData(subscriberData);
     data.Format = 'HTML';
     data.SendingType = 't';
+    data.PhoneNumber = subscriberData.phone
 
     function buildDemographicsData(input) {
         let _demographics = [];
