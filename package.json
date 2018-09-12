@@ -1,16 +1,16 @@
 {
-  "name": "apsis",
+  "name": "apsis-js",
   "version": "1.0.0",
   "description": "Interface for Apsis API",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/significantbit/apsis.git"
+    "url": "git+https://github.com/strt/apsis.git"
   },
-  "author": "Daniel Rönnkvist <daniel@significantbit.se>",
+  "author": "Dan Godiac <dan.godiac@strateg.se>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/significantbit/apsis/issues"
+    "url": "https://github.com/strt/apsis/issues"
   },
-  "homepage": "https://github.com/significantbit/apsis#readme"
+  "homepage": "https://github.com/strt/apsis"
 }

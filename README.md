@@ -1,6 +1,6 @@
 apsis
 ===
-[![npm version](https://badge.fury.io/js/apsis.svg)](https://badge.fury.io/js/apsis)
+[![npm version](https://badge.fury.io/js/apsis-js.svg)](https://badge.fury.io/js/apsis-js)
 
 Npm package for apsis newsletter marketing service.
 
@@ -24,12 +24,8 @@ Each method returns a promise.
 
 ## Methods
 
-Right now this package only has one method; create a subscriber to a mailing list.
+Right now this package only has one method.
 
 ```js
-apsis.subscriber.create(MailingListId, UpdateIfExists, subscriber)
+Apsis.sendTransactionEmail(projectId, recipientData, subscriberData)
 ```
-
-## Todo
-* Add implementation for missing API methods
-* Create some sort of build script so the can be maintained in several files
