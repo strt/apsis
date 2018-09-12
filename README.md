@@ -8,12 +8,12 @@ Npm package for apsis newsletter marketing service.
 
 Install using npm:
 ```
-npm install apsis
+npm install apsis-js
 ```
 
 Require and initiate in your project:
 ```js
-const apsis = require('apsis');
+const apsis = require('apsis-js');
 
 apsis.init({
   ApiKey: xxx
