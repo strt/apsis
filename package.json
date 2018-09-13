@@ -1,6 +1,6 @@
 {
   "name": "apsis-js",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Interface for Apsis API",
   "main": "index.js",
   "repository": {
