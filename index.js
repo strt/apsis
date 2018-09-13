@@ -99,21 +99,6 @@ Apsis.sendTransactionEmail = (projectId, recipientData, subscriberData) => {
     data.SendingType = 't';
     data.PhoneNumber = subscriberData.phone;
 
-    function buildDemographicsData(input) {
-        let _demographics = [];
-
-        for (let [key, value] of Apsis.demogaraphicKeyValueBindings) {
-
-            if ( input.hasOwnProperty(key) )
-                _demographics.push({
-                    'Key': value,
-                    'Value': input[key]
-                })
-        }
-
-        return _demographics;
-    }
-
     return Apsis.request(endpoint, 'POST', data);
 };
 
@@ -128,9 +113,34 @@ Apsis.createSubscriber = (mailingListId, subscriberData) => {
     let data = {};
 
     data.Email = subscriberData.email;
-    data.Name = subscriberData.firstName + subscriberData.lastName;
+    data.Name = subscriberData.firstName + ' ' + subscriberData.lastName;
+
+    if (data.hasOwnProperty('phone'))
+        data.PhoneNumber = data.phone;
+
+    data.DemDataFields = buildDemographicsData(subscriberData);
 
     return Apsis.request(endpoint, 'POST', data);
 };
+
+/**
+ * @param input
+ * @returns {Array}
+ */
+function buildDemographicsData(input) {
+
+    let _demographics = [];
+
+    for (let [key, value] of Apsis.demogaraphicKeyValueBindings) {
+
+        if ( input.hasOwnProperty(key) )
+            _demographics.push({
+                'Key': value,
+                'Value': input[key]
+            })
+    }
+
+    return _demographics;
+}
 
 module.exports = Apsis;
