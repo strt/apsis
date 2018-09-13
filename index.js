@@ -123,7 +123,7 @@ Apsis.sendTransactionEmail = (projectId, recipientData, subscriberData) => {
  */
 Apsis.createSubscriber = (mailingListId, subscriberData) => {
 
-    let endpoint = Apsis.endpoints.get('subscriber.create').replace('{mailinglist}', mailingListId);
+    let endpoint = Apsis.endpoints.get('subscriber.create').replace('{mailingListId}', mailingListId);
 
     let data = {};
 
