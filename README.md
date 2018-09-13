@@ -29,3 +29,7 @@ Right now this package only has one method.
 ```js
 Apsis.sendTransactionEmail(projectId, recipientData, subscriberData)
 ```
+
+```js
+Apsis.createSubscriber(mailingListId, subscriberData)
+```

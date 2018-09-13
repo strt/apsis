@@ -3,10 +3,17 @@ const https = require("https");
 
 let Apsis = {};
 
+/**
+ * @type {Map<string, string>}
+ */
 Apsis.endpoints = new Map([
     ['transaction.sendEmail', '/v1/transactional/projects/{projectId}/sendEmail'],
+    ['subscriber.create', '/v1/subscribers/mailinglist/{mailingListId}/create?updateIfExists=1'],
 ]);
 
+/**
+ * @type {Map<string, string>}
+ */
 Apsis.demogaraphicKeyValueBindings = new Map([
     ['firstName', 'Fornamn'],
     ['lastName', 'Efternamn'],
@@ -14,6 +21,9 @@ Apsis.demogaraphicKeyValueBindings = new Map([
     ['area', 'Lan'],
 ]);
 
+/**
+ * @param options
+ */
 Apsis.init = (options) => {
     if(!options.ApiKey)
         throw new Error("API Key is required to initate the API");
@@ -25,6 +35,12 @@ Apsis.init = (options) => {
     this.options.ApiKey = new Buffer(options.ApiKey).toString('base64');
 };
 
+/**
+ * @param path
+ * @param method
+ * @param body
+ * @returns {Promise}
+ */
 Apsis.request = (path, method, body) => {
     body = JSON.stringify(body);
 
@@ -64,6 +80,11 @@ Apsis.request = (path, method, body) => {
     });
 };
 
+/**
+ * @param projectId
+ * @param recipientData
+ * @param subscriberData
+ */
 Apsis.sendTransactionEmail = (projectId, recipientData, subscriberData) => {
 
     let endpoint = Apsis.endpoints.get('transaction.sendEmail').replace('{projectId}', projectId);
@@ -76,7 +97,7 @@ Apsis.sendTransactionEmail = (projectId, recipientData, subscriberData) => {
     data.DemDataFields = buildDemographicsData(subscriberData);
     data.Format = 'HTML';
     data.SendingType = 't';
-    data.PhoneNumber = subscriberData.phone
+    data.PhoneNumber = subscriberData.phone;
 
     function buildDemographicsData(input) {
         let _demographics = [];
@@ -90,10 +111,26 @@ Apsis.sendTransactionEmail = (projectId, recipientData, subscriberData) => {
                 })
         }
 
-        return _demographics
+        return _demographics;
     }
 
     return Apsis.request(endpoint, 'POST', data);
-}
+};
+
+/**
+ * @param mailingListId
+ * @param subscriberData
+ */
+Apsis.createSubscriber = (mailingListId, subscriberData) => {
+
+    let endpoint = Apsis.endpoints.get('subscriber.create').replace('{mailinglist}', mailingListId);
+
+    let data = {};
+
+    data.Email = subscriberData.email;
+    data.Name = subscriberData.firstName + subscriberData.lastName;
+
+    return Apsis.request(endpoint, 'POST', data);
+};
 
 module.exports = Apsis;
