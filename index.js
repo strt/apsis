@@ -4,6 +4,30 @@ const https = require("https");
 let Apsis = {};
 
 /**
+ * Escaping unicode
+ * @param s
+ * @param emit_unicode
+ * @returns {string}
+ */
+function escapedStringify(s, emit_unicode) {
+    let json = JSON.stringify(s);
+
+    return emit_unicode ? json : json.replace(/\//g,
+        function(c) {
+            return '\\/';
+        }
+    ).replace(/[\u003c\u003e]/g,
+        function(c) {
+            return '\\u'+('0000'+c.charCodeAt(0).toString(16)).slice(-4).toUpperCase();
+        }
+    ).replace(/[\u007f-\uffff]/g,
+        function(c) {
+            return '\\u'+('0000'+c.charCodeAt(0).toString(16)).slice(-4);
+        }
+    );
+}
+
+/**
  * @type {Map<string, string>}
  */
 Apsis.endpoints = new Map([
@@ -42,7 +66,7 @@ Apsis.init = (options) => {
  * @returns {Promise}
  */
 Apsis.request = (path, method, body) => {
-    body = JSON.stringify(body);
+    body = escapedStringify(body)
 
     let options = {
         hostname: 'se.api.anpdm.com',
